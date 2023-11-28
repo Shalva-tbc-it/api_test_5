@@ -11,7 +11,7 @@ import java.nio.charset.Charset
 
 class RegFragment : BaseFragment<FragmentRegBinding>(FragmentRegBinding::inflate) {
 
-    var jsonList = arrayListOf<JsonReg>()
+    private var jsonList = arrayListOf<JsonReg>()
     override fun create() {
         readJson()
     }
@@ -68,14 +68,5 @@ class RegFragment : BaseFragment<FragmentRegBinding>(FragmentRegBinding::inflate
         }
         return json
     }
-//    val jsonFile: String =
-//        requireContext().assets.open("RegTypes.json").bufferedReader().use { it.readText() }
-
-//
-//    val jsonArray = JSONArray(fileInString)
-//
-//    for (i in 0..jsonArray.length()) {
-//        var jsonObject = jsonArray.getJSONObject(i)
-//    }
 
 }
