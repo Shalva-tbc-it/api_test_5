@@ -41,15 +41,15 @@ class RegFragment : BaseFragment<FragmentRegBinding>(FragmentRegBinding::inflate
                 val enteredData = adapter.getEnteredData(position)
                 val item = adapter.currentList[position]
 
-                // Проверяем, что все необходимые данные не являются null и не являются пустыми строками
+                // check all on nonNull
                 item?.hint?.let { hint ->
                     item.required?.let { required ->
                         if (required && enteredData.isNullOrEmpty()) {
-                            // Поле обязательное, и введены пустые данные, пропускаем
+                            // if is null
                             requiredError = false
                         }
                         enteredData?.let {
-                            // Вызов метода ViewModel для обновления данных и проверки на обязательность
+                            // viewmodel for check data and add
                             userViewModel.setData(hint.toString(), required, enteredData)
                             requiredError = true
                         }

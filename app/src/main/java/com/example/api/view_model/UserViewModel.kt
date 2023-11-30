@@ -14,12 +14,11 @@ class UserViewModel() : ViewModel() {
 
     var userDate = MutableLiveData<String>()
 
-    // Используйте MutableStateFlow для изменяемого состояния
+    // For Change
     private val _dataMap = MutableStateFlow<Map<String, Boolean>>(emptyMap())
 
-    // Используйте StateFlow для предоставления доступа только на чтение
+    // For Read
     val dataMap: StateFlow<Map<String, Boolean>> = _dataMap
-
     fun getUserListItem(context: Context): User {
         lateinit var jsonString: String
         try {
@@ -33,14 +32,14 @@ class UserViewModel() : ViewModel() {
         return Gson().fromJson(jsonString, listUserType)
     }
 
-    // Метод для установки новых данных в Map
+    // add to map
     fun setData(key: String, isRequired: Boolean, enteredData: String) {
-        // Проверка на обязательность поля
+        // check on Required
         if (isRequired && enteredData.isEmpty()) {
-            // Действия в случае незаполненного обязательного поля
+            // if empty
             return
         }
-        // Обновление Map
+        // update map
         _dataMap.value = _dataMap.value + (key to isRequired)
     }
 

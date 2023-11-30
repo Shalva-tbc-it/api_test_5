@@ -42,7 +42,7 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
 
     private val dataMap = mutableMapOf<String, String>()
 
-    // Метод для получения данных из Map
+    // get data in Map
     fun getEnteredData(position: Int): String? {
         val item = getItem(position)
         return dataMap[item.hint]
