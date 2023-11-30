@@ -37,29 +37,11 @@ class RegFragment : BaseFragment<FragmentRegBinding>(FragmentRegBinding::inflate
     private fun listener() {
 
         binding.btnSend.setOnClickListener {
-            for (position in 0 until adapter.itemCount) {
-                val enteredData = adapter.getEnteredData(position)
-                val item = adapter.currentList[position]
-
-                // check all on nonNull
-                item?.hint?.let { hint ->
-                    item.required?.let { required ->
-                        if (required && enteredData.isNullOrEmpty()) {
-                            // if is null
-                            requiredError = false
-                        }
-                        enteredData?.let {
-                            // viewmodel for check data and add
-                            userViewModel.setData(hint.toString(), required, enteredData)
-                            requiredError = true
-                        }
-                    }
-                }
-            }
-            if (requiredError)
-            findNavController().navigate(
-                R.id.action_regFragment_to_secondFragment
-            ) else {
+            userViewModel.validateAndNavigate(adapter)
+            if (userViewModel.requiredError)
+                findNavController().navigate(
+                    R.id.action_regFragment_to_secondFragment
+                ) else {
                 Toast.makeText(requireContext(), "Field inputs", Toast.LENGTH_LONG).show()
             }
         }
