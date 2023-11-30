@@ -9,6 +9,19 @@
         android:id="@+id/regFragment"
         android:name="com.example.api.fragment.RegFragment"
         android:label="fragment_reg"
-        tools:layout="@layout/fragment_reg" />
+        tools:layout="@layout/fragment_reg" >
+        <action
+            android:id="@+id/action_regFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="com.example.api.fragment.SecondFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_second" >
+        <action
+            android:id="@+id/action_secondFragment_to_regFragment"
+            app:destination="@id/regFragment" />
+    </fragment>
 
 </navigation>

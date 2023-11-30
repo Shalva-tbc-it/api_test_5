@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/spinnerBg"
     android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
-</Spinner>
+    <Spinner
+        android:id="@+id/spinnerChooser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="10dp">
+    </Spinner>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
