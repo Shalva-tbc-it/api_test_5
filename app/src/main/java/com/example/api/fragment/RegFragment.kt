@@ -1,7 +1,7 @@
 package com.example.api.fragment
 
-import android.util.Log.e
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.api.R
@@ -14,13 +14,12 @@ import com.example.api.view_model.UserViewModel
 class RegFragment : BaseFragment<FragmentRegBinding>(FragmentRegBinding::inflate) {
 
     private var jsonList = mutableListOf<UserListItem>()
-    private var adapterList = mutableListOf<String>()
+    private var requiredError: Boolean = true
     private lateinit var adapter: UserRecyclerViewAdapter
-    private lateinit var userViewModel: UserViewModel
+    private val userViewModel: UserViewModel by viewModels()
 
 
     override fun create() {
-        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         val userItem = userViewModel.getUserListItem(requireContext())
         userItem.forEach { userList ->
             userList.forEach {
@@ -40,12 +39,29 @@ class RegFragment : BaseFragment<FragmentRegBinding>(FragmentRegBinding::inflate
         binding.btnSend.setOnClickListener {
             for (position in 0 until adapter.itemCount) {
                 val enteredData = adapter.getEnteredData(position)
-                e("getDateAdapter", "$enteredData")
+                val item = adapter.currentList[position]
 
+                // Проверяем, что все необходимые данные не являются null и не являются пустыми строками
+                item?.hint?.let { hint ->
+                    item.required?.let { required ->
+                        if (required && enteredData.isNullOrEmpty()) {
+                            // Поле обязательное, и введены пустые данные, пропускаем
+                            requiredError = false
+                        }
+                        enteredData?.let {
+                            // Вызов метода ViewModel для обновления данных и проверки на обязательность
+                            userViewModel.setData(hint.toString(), required, enteredData)
+                            requiredError = true
+                        }
+                    }
+                }
             }
+            if (requiredError)
             findNavController().navigate(
                 R.id.action_regFragment_to_secondFragment
-            )
+            ) else {
+                Toast.makeText(requireContext(), "Field inputs", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

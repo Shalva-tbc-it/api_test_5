@@ -29,8 +29,6 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
     }
 
 
-
-
     private var userList = mutableListOf<UserListItem>()
     private var getDate = ArrayList<String>()
     private var onItemClickListener: ((userDate: String) -> Unit)? = null
@@ -42,11 +40,14 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
         submitList(userList)
     }
 
-    private val enteredDataMap = mutableMapOf<Int, String>()
+    private val dataMap = mutableMapOf<String, String>()
 
-    fun getEnteredData(position: Int): String {
-        return enteredDataMap[position] ?: ""
+    // Метод для получения данных из Map
+    fun getEnteredData(position: Int): String? {
+        val item = getItem(position)
+        return dataMap[item.hint]
     }
+
 
     fun setOnItemClickListener(listener: (userDate: String) -> Unit) {
         onItemClickListener = listener
@@ -82,7 +83,6 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is JsonInputViewHolder) {
             holder.bind()
-
         } else if (holder is JsonChooserViewHolder) {
             holder.bind()
         }
@@ -96,8 +96,11 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
             inputBinding = binding
             val input = currentList[adapterPosition]
             edInput.hint = input.hint
+
             edInput.doOnTextChanged { text, _, _, _ ->
-                enteredDataMap[adapterPosition] = text.toString()
+                // Сохранение данных в Map при изменении текста
+                val hintKey = input.hint?.toString() ?: ""
+                dataMap[hintKey] = text.toString()
             }
 
             if (adapterPosition % 3 == 2) {
