@@ -30,7 +30,6 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
 
 
     private var userList = mutableListOf<UserListItem>()
-    private var getDate = ArrayList<String>()
     private var onItemClickListener: ((userDate: String) -> Unit)? = null
     private lateinit var inputBinding: RecyclerviewInputBinding
 
@@ -57,28 +56,23 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
         return if (viewType == INPUT_JSON) {
             JsonInputViewHolder(
                 RecyclerviewInputBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
         } else {
             JsonChooserViewHolder(
                 RecyclerviewChooserBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
         }
     }
 
-    override fun getItemViewType(position: Int) =
-        if (position % 6 < 3) {
-            if (userList[position].field_type == "input") INPUT_JSON else CHOOSER_JSON
-        } else {
-            if (userList[position].field_type == "input") INPUT_JSON else CHOOSER_JSON
-        }
+    override fun getItemViewType(position: Int) = if (position % 6 < 3) {
+        if (userList[position].field_type == "input") INPUT_JSON else CHOOSER_JSON
+    } else {
+        if (userList[position].field_type == "input") INPUT_JSON else CHOOSER_JSON
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is JsonInputViewHolder) {
@@ -98,7 +92,6 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
             edInput.hint = input.hint
 
             edInput.doOnTextChanged { text, _, _, _ ->
-                // Сохранение данных в Map при изменении текста
                 val hintKey = input.hint?.toString() ?: ""
                 dataMap[hintKey] = text.toString()
             }
@@ -109,7 +102,7 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
                 layoutParams.bottomMargin = 30
             } else if (adapterPosition % 3 == 0) {
                 root.setBackgroundResource(R.drawable.input_corner_top)
-            }else if (adapterPosition %  3 == 1){
+            } else if (adapterPosition % 3 == 1) {
                 root.setBackgroundResource(R.drawable.input_corner_center)
             }
         }
@@ -128,7 +121,7 @@ class UserRecyclerViewAdapter : ListAdapter<UserListItem, RecyclerView.ViewHolde
                 layoutParams.bottomMargin = 30
             } else if (adapterPosition % 3 == 0) {
                 root.setBackgroundResource(R.drawable.input_corner_top)
-            }else if (adapterPosition %  3 == 1){
+            } else if (adapterPosition % 3 == 1) {
                 root.setBackgroundResource(R.drawable.input_corner_center)
             }
 

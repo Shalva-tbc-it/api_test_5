@@ -14,7 +14,6 @@ import com.example.api.view_model.UserViewModel
 class RegFragment : BaseFragment<FragmentRegBinding>(FragmentRegBinding::inflate) {
 
     private var jsonList = mutableListOf<UserListItem>()
-    private var requiredError: Boolean = true
     private lateinit var adapter: UserRecyclerViewAdapter
     private val userViewModel: UserViewModel by viewModels()
 

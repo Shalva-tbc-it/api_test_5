@@ -1,12 +1,7 @@
 package com.example.api.view_model
 
 import android.content.Context
-import android.util.Log
-import android.util.Log.e
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import com.example.api.R
 import com.example.api.adapter.UserRecyclerViewAdapter
 import com.example.api.data_model.User
 import com.google.gson.Gson
@@ -17,13 +12,9 @@ import java.io.IOException
 
 class UserViewModel() : ViewModel() {
 
-    var userDate = MutableLiveData<String>()
-
-    // For Change
-    private val _dataMap = MutableStateFlow<Map<String, Boolean>>(emptyMap())
-
-    // For Read
-    val dataMap: StateFlow<Map<String, Boolean>> = _dataMap
+    private var _dataMap = MutableStateFlow<Map<String, String>>(emptyMap())
+    val dataMap: StateFlow<Map<String, String>> = _dataMap
+    var requiredError = false
     fun getUserListItem(context: Context): User {
         lateinit var jsonString: String
         try {
@@ -38,16 +29,12 @@ class UserViewModel() : ViewModel() {
     }
 
     // add to map
-    fun setData(key: String, isRequired: Boolean, enteredData: String) {
-        // check on Required
-        if (isRequired && enteredData.isEmpty()) {
-            // if empty
-            return
-        }
-        // update map
-        _dataMap.value = _dataMap.value + (key to isRequired)
+    fun setData(hint: String, enteredData: String) {
+        val updatedMap = _dataMap.value.toMutableMap()
+        updatedMap[hint] = enteredData
+        _dataMap.value = updatedMap.toMap()
     }
-    var requiredError = false
+
     fun validateAndNavigate(adapter: UserRecyclerViewAdapter) {
 
         for (position in 0 until adapter.itemCount) {
@@ -60,15 +47,12 @@ class UserViewModel() : ViewModel() {
                         requiredError = false
                     }
                     enteredData?.let {
-                        setData(hint.toString(), required, enteredData)
+                        setData(hint, enteredData)
                         requiredError = true
                     }
                 }
             }
-
         }
-
     }
-
 
 }
