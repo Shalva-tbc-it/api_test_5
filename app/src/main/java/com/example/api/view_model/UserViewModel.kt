@@ -3,6 +3,7 @@ package com.example.api.view_model
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.api.adapter.MainUserRecyclerViewAdapter
+import com.example.api.adapter.SecondaryUserRecyclerAdapter
 import com.example.api.data_model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -35,24 +36,24 @@ class UserViewModel() : ViewModel() {
         _dataMap.value = updatedMap.toMap()
     }
 
-    fun validateAndNavigate(adapter: MainUserRecyclerViewAdapter) {
+    fun validateAndNavigate(adapter: SecondaryUserRecyclerAdapter) {
 
-        for (position in 0 until adapter.itemCount) {
-            val enteredData = adapter.getEnteredData(position)
-            val item = adapter.currentList[position]
-
-            item?.hint?.let { hint ->
-                item.required?.let { required ->
-                    if (required && enteredData.isNullOrEmpty()) {
-                        requiredError = false
-                    }
-                    enteredData?.let {
-                        setData(hint, enteredData)
-                        requiredError = true
-                    }
-                }
-            }
-        }
+//        for (position in 0 until adapter.itemCount) {
+//            val enteredData = adapter.getEnteredData(position)
+//            val item = adapter.currentList[position]
+//
+//            item?.hint?.let { hint ->
+//                item.required?.let { required ->
+//                    if (required && enteredData.isNullOrEmpty()) {
+//                        requiredError = false
+//                    }
+//                    enteredData?.let {
+//                        setData(hint, enteredData)
+//                        requiredError = true
+//                    }
+//                }
+//            }
+//        }
 
     }
 
