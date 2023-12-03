@@ -8,10 +8,15 @@
     tools:context=".fragment.RegFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcInputs"
+        android:id="@+id/rcMainInputs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/secondaryRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSend"

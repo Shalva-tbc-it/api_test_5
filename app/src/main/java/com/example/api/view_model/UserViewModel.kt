@@ -2,7 +2,7 @@ package com.example.api.view_model
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.example.api.adapter.UserRecyclerViewAdapter
+import com.example.api.adapter.MainUserRecyclerViewAdapter
 import com.example.api.data_model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -29,13 +29,13 @@ class UserViewModel() : ViewModel() {
     }
 
     // add to map
-    fun setData(hint: String, enteredData: String) {
+    private fun setData(hint: String, enteredData: String) {
         val updatedMap = _dataMap.value.toMutableMap()
         updatedMap[hint] = enteredData
         _dataMap.value = updatedMap.toMap()
     }
 
-    fun validateAndNavigate(adapter: UserRecyclerViewAdapter) {
+    fun validateAndNavigate(adapter: MainUserRecyclerViewAdapter) {
 
         for (position in 0 until adapter.itemCount) {
             val enteredData = adapter.getEnteredData(position)
@@ -53,6 +53,7 @@ class UserViewModel() : ViewModel() {
                 }
             }
         }
+
     }
 
 }
